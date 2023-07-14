@@ -10,4 +10,7 @@ import Foundation
 protocol MainResponder {
     func showLaunch()
     func showOnboarding()
+    func showSignIn()
+    func showRegistration()
+    func showMainTabBar()
 }

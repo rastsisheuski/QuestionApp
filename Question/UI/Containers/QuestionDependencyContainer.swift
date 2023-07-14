@@ -12,29 +12,98 @@ class QuestionDependencyConteiner {
     func makeMainViewcontroller() -> MainViewController {
         
         let sharedViewModel = createMainViewModel()
-        let launchViewController = {
-            self.makeLaunchViewController()
+        let sharedAuthManager = createAuthManager()
+        let sharedAPIManager = createAPIManager()
+        
+        let launchViewControllerFactory = {
+            self.makeLaunchViewControllerFactory()
         }
-        let onboardingViewController = {
-            self.makeOnboardingViewcontroller()
+        
+        let onboardingViewControllerFactory = {
+            self.makeOnboardingViewcontrollerFactory()
+        }
+        
+        let signInViewControllerFactory = {
+            self.makeSignInViewcontrollerFactory(
+                navigationRespnoder: sharedViewModel,
+                authManager: sharedAuthManager,
+                apiManager: sharedAPIManager
+            )
+        }
+        
+        let registrationViewControllerFactory = {
+            self.makeRegistrationViewControllerFactory()
+        }
+        
+        let mainTabBarFactory = {
+            self.makeMainTabBarController()
         }
         
         return MainViewController(
             viewModel: sharedViewModel,
-            launchViewControllerFactory: launchViewController,
-            onboardingViewControllerFactory: onboardingViewController
+            launchViewControllerFactory: launchViewControllerFactory,
+            onboardingViewControllerFactory: onboardingViewControllerFactory,
+            singInViewControllerFactory: signInViewControllerFactory,
+            registrationViewControllerFactory: registrationViewControllerFactory,
+            mainTabBarControllerFactory: mainTabBarFactory
         )
     }
     
-    private func makeLaunchViewController() -> LaunchViewController {
+    private func makeLaunchViewControllerFactory() -> LaunchViewController {
         return LaunchViewController()
     }
     
-    private func makeOnboardingViewcontroller() -> OnboardingViewController {
-        return OnboardingViewController()
+    private func makeOnboardingViewcontrollerFactory() -> OnboardingViewController {
+        let onboardingViewModel = makeOnboardingViewModel()
+        return OnboardingViewController(viewModel: onboardingViewModel)
+    }
+    
+    private func makeOnboardingViewModel() -> OnboardingViewModel {
+        return OnboardingViewModel()
+    }
+    
+    private func makeSignInViewcontrollerFactory(
+        navigationRespnoder: MainResponder,
+        authManager: AuthManager,
+        apiManager: APIManager
+    ) -> SignInViewController {
+        let signInViewModel = createSignInViewModel(
+            authManager: authManager,
+            apiManager: apiManager
+        )
+        return SignInViewController(
+            viewModel: signInViewModel,
+            navigationResponer: navigationRespnoder
+        )
+    }
+    
+    private func createSignInViewModel(
+        authManager: AuthManager,
+        apiManager: APIManager
+    ) -> SignInViewModel {
+        return SignInViewModel(
+            authManager: authManager,
+            apiManager: apiManager
+        )
+    }
+    
+    private func makeRegistrationViewControllerFactory() -> RegistrationViewController {
+        return RegistrationViewController()
+    }
+    
+    private func makeMainTabBarController() -> UITabBarController {
+        QuestionDependencyConteiner().makeMainTabBarController()
     }
     
     private func createMainViewModel() -> MainViewModel {
         return MainViewModel()
+    }
+    
+    private func createAuthManager() -> AuthManager {
+        return AuthManager()
+    }
+    
+    private func createAPIManager() -> APIManager {
+        return APIManager()
     }
 }

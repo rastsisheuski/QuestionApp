@@ -10,4 +10,7 @@ import Foundation
 enum MainView {
     case launch
     case onboarding
+    case singIn
+    case registration
+    case mainTabBar
 }

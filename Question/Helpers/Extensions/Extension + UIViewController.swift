@@ -19,7 +19,7 @@ extension UIViewController {
         view.endEditing(true)
     }
     
-    public func addFullScreen(childViewController child: UIViewController) {
+    func addFullScreen(childViewController child: UIViewController) {
         guard child.parent == nil else {
             return
         }
@@ -40,7 +40,7 @@ extension UIViewController {
         child.didMove(toParent: self)
     }
     
-    public func remove(childViewController child: UIViewController?) {
+    func remove(childViewController child: UIViewController?) {
         guard let child = child else {
             return
         }
