@@ -22,8 +22,13 @@ enum Colors {
         
     }
     
+    enum signIn {
+        static let logInbottomColor: UIColor = #colorLiteral(red: 0.3294117647, green: 0.1137254902, blue: 0.3803921569, alpha: 1)
+    }
+    
     enum OnboardingView {
-        static let skipButton: UIColor = #colorLiteral(red: 0.4352941176, green: 0.1450980392, blue: 0.6352941176, alpha: 1)
+        static let skipButtonColor: UIColor = #colorLiteral(red: 0.4352941176, green: 0.1450980392, blue: 0.6352941176, alpha: 1)
+        static let startButtonColor: UIColor = #colorLiteral(red: 0.3647058824, green: 0.2549019608, blue: 0.6039215686, alpha: 1)
     }
     
     enum SpinnerView {

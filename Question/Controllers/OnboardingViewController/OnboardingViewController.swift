@@ -27,12 +27,14 @@ class OnboardingViewController: NiblessViewController {
     // MARK: - Public Properties
     
     let viewModel: OnboardingViewModel
+    let navigationResponder: MainResponder
     
     // MARK: -
     // MARK: - LifeCycle
     
-    init(viewModel: OnboardingViewModel) {
+    init(viewModel: OnboardingViewModel, navigationResponer: MainResponder) {
         self.viewModel = viewModel
+        self.navigationResponder = navigationResponer
         super.init()
     }
     
@@ -47,6 +49,7 @@ class OnboardingViewController: NiblessViewController {
         navigationController?.isNavigationBarHidden = true
         
         setDelegates()
+        setupTargets()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,12 +58,8 @@ class OnboardingViewController: NiblessViewController {
         slides = createSlides()
         setupSlidesScrollView(slides: slides)
         hideImageViews()
+        hideStartButton()
         showImageViewAnimated(currentIndex: 0)
-    }
-    
-    func hideImageViews() {
-        slides.forEach {$0.imageView.isHidden = true }
-        slides.forEach {$0.imageView.alpha = 0.0 }
     }
     
     // MARK: -
@@ -68,6 +67,21 @@ class OnboardingViewController: NiblessViewController {
     
     private func setDelegates() {
         contentView.scrollView.delegate = self
+    }
+    
+    private func setupTargets() {
+        contentView.skipButton.addTarget(self, action: #selector(skipOnboarding(sender: )), for: .touchUpInside)
+        contentView.startButton.addTarget(self, action: #selector(skipOnboarding(sender: )), for: .touchUpInside)
+    }
+    
+    private func hideImageViews() {
+        slides.forEach {$0.imageView.isHidden = true }
+        slides.forEach {$0.imageView.alpha = 0.0 }
+    }
+    
+    private func hideStartButton() {
+        contentView.startButton.isHidden = true
+        contentView.startButton.alpha = 0.0
     }
     
     private func createSlides() -> [OnboardingView] {
@@ -138,6 +152,8 @@ class OnboardingViewController: NiblessViewController {
         let fourthScreenOffsetStep = OnboardingInfo.fourth.rawValue
         
         contentView.pageControl.isHidden = false
+        contentView.pageControl.alpha = 1.0
+        hideStartButton()
         
         switch persentHorizontalOffset {
             // MARK: - First View
@@ -205,13 +221,12 @@ class OnboardingViewController: NiblessViewController {
                 )
         }
         if currentIndex == OnboardingInfo.allCases.count - 1 {
-//            contentView.pageControl.isHidden = true
+            hideFirstAndShowSecondAnimated(firstView: contentView.pageControl, sencondView: contentView.startButton)
         }
     }
     
     private func showImageViewAnimated(currentIndex: Int) {
         self.slides[currentIndex].imageView.isHidden = false
-        
         
         UIView.animate(withDuration: 3.0,
                        delay: 0.5,
@@ -221,6 +236,20 @@ class OnboardingViewController: NiblessViewController {
                        animations: ({ [weak self] in
             self?.slides[currentIndex].imageView.alpha = 1.0
             self?.slides[currentIndex].imageView.layoutIfNeeded()
+        }), completion: nil)
+    }
+    
+    private func hideFirstAndShowSecondAnimated(firstView: UIView, sencondView: UIView) {
+        contentView.pageControl.isHidden = true
+        contentView.startButton.isHidden = false
+        
+        UIView.animate(withDuration: 2.0,
+                       delay: 0.5,
+                       animations: ({ [weak self] in
+            self?.contentView.pageControl.alpha = 0.0
+            self?.contentView.startButton.alpha = 1.0
+            self?.contentView.pageControl.layoutIfNeeded()
+            self?.contentView.startButton.layoutIfNeeded()
         }), completion: nil)
     }
 }
@@ -246,8 +275,16 @@ extension OnboardingViewController: UIScrollViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let pageIndex = round(scrollView.contentOffset.x / contentView.frame.width)
         contentView.pageControl.currentPage = Int(pageIndex)
-        print(pageIndex)
         
         showImageViewAnimated(currentIndex: Int(pageIndex))
+    }
+}
+
+// MARK: -
+// MARK: - Extension OnboardingViewController + @Objc Methods
+
+extension OnboardingViewController {
+    @objc private func skipOnboarding(sender: UIButton) {
+        navigationResponder.showSignIn()
     }
 }

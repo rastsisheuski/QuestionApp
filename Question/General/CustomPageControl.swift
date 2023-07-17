@@ -94,8 +94,8 @@ class CustomPageControl: UIStackView {
             self.dotWidthConstraints[index].constant = dotWidth
             
             UIView.animate(withDuration: animationDuration) {
-                self.layoutIfNeeded()
                 self.layoutSubviews()
+                self.layoutIfNeeded()
             }
         }
     }

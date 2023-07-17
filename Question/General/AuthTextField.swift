@@ -100,7 +100,9 @@ class AuthTextField: UITextField {
         backgroundColor = Colors.General.placeholderBackground
         layer.cornerRadius = 12
         clipsToBounds = true
-        textColor = .white
+        textColor = .lightGray
+        backgroundColor = .white
+        
     }
     
     private func validate(string: String?, pattern: ValidationType) -> Bool {

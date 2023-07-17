@@ -41,52 +41,28 @@ class SignInViewController: NiblessViewController {
         super.viewDidLoad()
         
         hideKeyboardWhenTappedAround()
-        setupTargets()
-        bindViewModel()
+        setupGesture()
     }
     
     // MARK: -
     // MARK: - Private Methods
     
-    private func bindViewModel() {
-        viewModel.signInResponce.bind { [weak self] error in
-            if error != nil {
-                print(error!.localizedDescription)
-                return
-            }
-            
-            self?.navigationResponer.showMainTabBar()
-        }
-    }
-    
-    private func setupTargets() {
-        contentView.bottomView.enterButton.addTarget(self, action: #selector(wasEnterButtonTapped), for: .touchUpInside)
-        contentView.bottomView.registrationButton.addTarget(self, action: #selector(registrationButtonWasPressed), for: .touchUpInside)
-    }
-    
-    private func createLoginUser() -> LoginUserModel? {
-        let emailField = contentView.bottomView.emailView.textField
-        let passwordField = contentView.bottomView.passwordView.textField
-        
-        guard let email = emailField.text, emailField.isValid,
-              let password = passwordField.text, passwordField.isValid else { return nil }
-        
-        let loginUser = LoginUserModel(email: email, password: password)
-        return loginUser
+    private func setupGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(respondToPanGesture))
+        contentView.signInWithEmailLabel.addGestureRecognizer(tapGesture)
     }
 }
 
-// MARK: -
-// MARK: - Extension LoginViewController + @Objc Methods
-
 extension SignInViewController {
-    @objc private func wasEnterButtonTapped() {
-        contentView.bottomView.checkValidateState()
-        guard let loginUser = createLoginUser() else { return }
-        viewModel.signIn(loginUser: loginUser)
-    }
-    
-    @objc private func registrationButtonWasPressed() {
-        navigationResponer.showRegistration()
+    @objc func respondToPanGesture() {
+        contentView.signInWithEmailLabel.isHidden = true
+        contentView.alreayHaveAccountLabel.isHidden = true
+        contentView.bottomView.alpha = 0.0
+        
+        UIView.animate(withDuration: 0.5) { [weak self] in
+            self?.contentView.bottomView.isHidden = false
+            self?.contentView.bottomView.alpha = 1.0
+            self?.contentView.bottomView.layoutIfNeeded()
+        }
     }
 }

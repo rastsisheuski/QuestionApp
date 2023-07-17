@@ -40,8 +40,6 @@ enum Constants {
     enum RegistrationBottomView {
         static let checkBoxHeight: CGFloat = 32
         static let privacyPolicyStringFontSize: CGFloat = 12
-        static let confirmButtonVerticalPadding: CGFloat = 20
-        static let confirmButtonHorizontalPadding: CGFloat = 20
         static let confirmButtonFontSize: CGFloat = 20
         static let titleFontSize: CGFloat = 25
     }

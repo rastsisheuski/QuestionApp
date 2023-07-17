@@ -14,7 +14,7 @@ class OnboardingViewControllerView: UIView {
     lazy var backgroundImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = Images.onboardingBackgroundImage.image
+        imageView.image = Images.Onboarding.backgroundImage.image
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
@@ -25,7 +25,7 @@ class OnboardingViewControllerView: UIView {
         button.setTitle("Skip", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 10, weight: .bold)
         button.setTitleColor(Colors.General.whiteMainColor, for: .normal)
-        button.backgroundColor = Colors.OnboardingView.skipButton
+        button.backgroundColor = Colors.OnboardingView.skipButtonColor
         button.translatesAutoresizingMaskIntoConstraints = false
 
         return button
@@ -36,6 +36,7 @@ class OnboardingViewControllerView: UIView {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.isPagingEnabled = true
         scrollView.bounces = false
+        scrollView.showsHorizontalScrollIndicator = false
         return scrollView
     }()
     
@@ -43,6 +44,16 @@ class OnboardingViewControllerView: UIView {
         let pageControl = CustomPageControl()
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         return pageControl
+    }()
+    
+    lazy var startButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Начать", for: .normal)
+        button.titleLabel?.font = UIFont.useCustomFont(withName: Fonts.pattayaRegular.rawValue, size: 24)
+        button.setTitleColor(Colors.General.whiteMainColor, for: .normal)
+        button.backgroundColor = Colors.OnboardingView.startButtonColor
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
     // MARK: -
@@ -59,10 +70,6 @@ class OnboardingViewControllerView: UIView {
         layoutElements()
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -72,17 +79,30 @@ class OnboardingViewControllerView: UIView {
             firstAppear = false
         }
     }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: -
     // MARK: - Private Methods
     
     private func setupUI() {
         setupSkipButton()
+        setupStartButton()
+//        setupPageControlView()
     }
     
     private func setupSkipButton() {
         skipButton.contentEdgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
-        skipButton.layer.cornerRadius = skipButton.frame.size.height / 2
+        skipButton.layer.cornerRadius = skipButton.frame.size.height / 1.5
         skipButton.clipsToBounds = true
+        skipButton.makeShadow()
+    }
+    
+    private func setupStartButton() {
+        startButton.layer.cornerRadius = skipButton.frame.size.height
+        startButton.clipsToBounds = true
         skipButton.makeShadow()
     }
     
@@ -98,6 +118,7 @@ class OnboardingViewControllerView: UIView {
         layoutSkipButton()
         layoutBackgroundImageView()
         layoutPageControl()
+        layoutStartButton()
     }
     
     private func layoutScrollView() {
@@ -112,7 +133,6 @@ class OnboardingViewControllerView: UIView {
         NSLayoutConstraint.activate([
             skipButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Constants.General.defaultSpacing),
             skipButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: Constants.General.defaultSpacing),
-//            skipButton.heightAnchor.constraint(equalToConstant: Constants.Onboarding.skipButtonHeight),
             skipButton.widthAnchor.constraint(equalTo: skipButton.heightAnchor, multiplier: 2.3)
         ])
     }
@@ -134,6 +154,16 @@ class OnboardingViewControllerView: UIView {
         NSLayoutConstraint.activate([
             pageControl.centerXAnchor.constraint(equalTo: centerXAnchor),
             pageControl.bottomAnchor.constraint(equalTo: scrollView.frameLayoutGuide.bottomAnchor, constant: -20)
+        ])
+    }
+    
+    private func layoutStartButton() {
+        addSubview(startButton)
+        
+        NSLayoutConstraint.activate([
+            startButton.centerXAnchor.constraint(equalTo: centerXAnchor),
+            startButton.bottomAnchor.constraint(equalTo: scrollView.frameLayoutGuide.bottomAnchor, constant: -20),
+            startButton.widthAnchor.constraint(equalTo: pageControl.widthAnchor)
         ])
     }
 }

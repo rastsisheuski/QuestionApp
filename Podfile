@@ -12,7 +12,6 @@ target 'Question' do
  	pod 'FirebaseStorage'
  	pod 'Firebase/Auth'
 	pod 'GoogleSignIn'
-	pod 'AdvancedPageControl'
 
 	post_install do |installer|
     	  installer.generated_projects.each do |project|

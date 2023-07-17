@@ -20,7 +20,7 @@ class QuestionDependencyConteiner {
         }
         
         let onboardingViewControllerFactory = {
-            self.makeOnboardingViewcontrollerFactory()
+            self.makeOnboardingViewcontrollerFactory(navigationResponer: sharedViewModel)
         }
         
         let signInViewControllerFactory = {
@@ -53,9 +53,9 @@ class QuestionDependencyConteiner {
         return LaunchViewController()
     }
     
-    private func makeOnboardingViewcontrollerFactory() -> OnboardingViewController {
+    private func makeOnboardingViewcontrollerFactory(navigationResponer: MainResponder) -> OnboardingViewController {
         let onboardingViewModel = makeOnboardingViewModel()
-        return OnboardingViewController(viewModel: onboardingViewModel)
+        return OnboardingViewController(viewModel: onboardingViewModel, navigationResponer: navigationResponer)
     }
     
     private func makeOnboardingViewModel() -> OnboardingViewModel {
