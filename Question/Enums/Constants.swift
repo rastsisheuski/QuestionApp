@@ -29,6 +29,7 @@ enum Constants {
     enum Registration {
         static let titleLabelTopConstraint: CGFloat = 130.0
         static let baseConstraint: CGFloat = 60.0
+        static let backButtonHeightConstraint: CGFloat = 32.0
     }
     
     enum AuthTextField {

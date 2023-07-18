@@ -12,6 +12,24 @@ class RegistrationViewControllerView: UIView {
     // MARK: -
     // MARK: - Public Properties
     
+    lazy var backgroundImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = Images.SignIn.backgroundImage.image
+        return imageView
+    }()
+    
+    let backButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "chevron.backward"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFit
+        button.contentVerticalAlignment = .fill
+        button.contentHorizontalAlignment = .fill
+        button.tintColor = .white
+        return button
+    }()
+    
     lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -26,6 +44,7 @@ class RegistrationViewControllerView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 20)
         label.textColor = .white
+        label.textAlignment = .center
         label.text = "Регистрация"
         return label
     }()
@@ -96,6 +115,7 @@ class RegistrationViewControllerView: UIView {
             weight: .bold,
             color: .purple
         )
+        label.textAlignment = .center
         return label
     }()
     
@@ -112,20 +132,55 @@ class RegistrationViewControllerView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        setupUI()
+    }
+    
     // MARK: -
     // MARK: - Private Methods
     
+    private func setupUI() {
+        backgroundColor = .white
+    }
+    
     private func layoutElements() {
+        layoutBackgroundImage()
+        layoutBackButton()
         layoutScrollView()
         layoutTitleLabel()
         layoutStackView()
         layoutSignInButon()
         layoutAlreadyHaveAccountLabel()
     }
+    
+    private func layoutBackgroundImage() {
+        addSubview(backgroundImageView)
+        
+        backgroundImageView.fillSuperview()
+    }
+    
+    private func layoutBackButton() {
+        addSubview(backButton)
+        
+        NSLayoutConstraint.activate([
+            backButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.General.defaultSpacing),
+            backButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor,  constant:  Constants.General.defaultSpacing),
+            backButton.heightAnchor.constraint(equalToConstant: Constants.Registration.backButtonHeightConstraint),
+            backButton.widthAnchor.constraint(equalTo: backButton.heightAnchor, multiplier: 1)
+        ])
+    }
+    
     private func layoutScrollView() {
         addSubview(scrollView)
         
-        scrollView.fillSuperview()
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: Constants.General.defaultSpacing),
+            scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
     }
     
     private func layoutTitleLabel() {

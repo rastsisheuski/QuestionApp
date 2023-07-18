@@ -57,6 +57,7 @@
 		97DBE0642A64346400142D11 /* Extension + UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DBE0632A64346400142D11 /* Extension + UILabel.swift */; };
 		97DBE0662A64426E00142D11 /* SignInBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DBE0652A64426E00142D11 /* SignInBottomView.swift */; };
 		97DBE0682A64460300142D11 /* AuthTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DBE0672A64460300142D11 /* AuthTextFieldView.swift */; };
+		97DBE06A2A66465300142D11 /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97DBE0692A66465300142D11 /* RegistrationViewModel.swift */; };
 		97F9C91D2A5B0255000D6E6E /* CustomPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F9C91C2A5B0255000D6E6E /* CustomPageControl.swift */; };
 		97F9C95D2A5D9DF7000D6E6E /* Pattaya-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 97F9C95C2A5D9DF7000D6E6E /* Pattaya-Regular.ttf */; };
 /* End PBXBuildFile section */
@@ -133,6 +134,7 @@
 		97DBE0632A64346400142D11 /* Extension + UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UILabel.swift"; sourceTree = "<group>"; };
 		97DBE0652A64426E00142D11 /* SignInBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInBottomView.swift; sourceTree = "<group>"; };
 		97DBE0672A64460300142D11 /* AuthTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTextFieldView.swift; sourceTree = "<group>"; };
+		97DBE0692A66465300142D11 /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
 		97F9C91C2A5B0255000D6E6E /* CustomPageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPageControl.swift; sourceTree = "<group>"; };
 		97F9C95C2A5D9DF7000D6E6E /* Pattaya-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pattaya-Regular.ttf"; sourceTree = "<group>"; };
 		D8B7B8FD80796E2A35B19706 /* Pods-Question.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Question.release.xcconfig"; path = "Target Support Files/Pods-Question/Pods-Question.release.xcconfig"; sourceTree = "<group>"; };
@@ -376,6 +378,7 @@
 				979CC42B2A3DC5BE00BF90E4 /* MainViewModel.swift */,
 				979CC42D2A3DC70400BF90E4 /* OnboardingViewModel.swift */,
 				976393D92A3F373D00786CD0 /* SignInViewModel.swift */,
+				97DBE0692A66465300142D11 /* RegistrationViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -623,6 +626,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				979CC43B2A3DCC6F00BF90E4 /* NibblesViewController.swift in Sources */,
+				97DBE06A2A66465300142D11 /* RegistrationViewModel.swift in Sources */,
 				979CC43D2A3DDCB000BF90E4 /* MainView.swift in Sources */,
 				976393EE2A3F3AF900786CD0 /* Extension + UIView.swift in Sources */,
 				976393FA2A3F3CB700786CD0 /* Colors.swift in Sources */,

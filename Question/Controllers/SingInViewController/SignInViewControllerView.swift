@@ -104,6 +104,7 @@ class SignInViewControllerView: UIView {
             weight: .bold,
             color: .purple
         )
+        label.isUserInteractionEnabled = true
         return label
     }()
     

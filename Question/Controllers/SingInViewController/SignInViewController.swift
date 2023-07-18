@@ -48,8 +48,11 @@ class SignInViewController: NiblessViewController {
     // MARK: - Private Methods
     
     private func setupGesture() {
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(respondToGesture))
+        contentView.signInWithEmailLabel.addGestureRecognizer(gesture)
+        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(respondToPanGesture))
-        contentView.signInWithEmailLabel.addGestureRecognizer(tapGesture)
+        contentView.alreayHaveAccountLabel.addGestureRecognizer(tapGesture)
     }
 }
 
@@ -64,5 +67,9 @@ extension SignInViewController {
             self?.contentView.bottomView.alpha = 1.0
             self?.contentView.bottomView.layoutIfNeeded()
         }
+    }
+    
+    @objc func respondToGesture() {
+        navigationResponer.showRegistration()
     }
 }

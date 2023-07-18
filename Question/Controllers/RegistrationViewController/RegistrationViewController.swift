@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RegistrationViewController: UIViewController {
+class RegistrationViewController: NiblessViewController {
     
     // MARK: -
     // MARK: - Private Properties
@@ -17,7 +17,19 @@ class RegistrationViewController: UIViewController {
     }
     
     // MARK: -
+    // MARK: - Public Properties
+    
+    let navigationStepBackResponder: NavigationStepBackResponder
+    let viewModel: RegistrationViewModel
+    
+    // MARK: -
     // MARK: - Lifecycle
+    
+    init(viewModel: RegistrationViewModel ,navigationStepBackResponder: NavigationStepBackResponder) {
+        self.viewModel = viewModel
+        self.navigationStepBackResponder = navigationStepBackResponder
+        super.init()
+    }
     
     override func loadView() {
         super.loadView()
@@ -27,5 +39,24 @@ class RegistrationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        hideKeyboardWhenTappedAround()
+        setupTargets()
+    }
+    
+    // MARK: -
+    // MARK: - Private Methods
+    
+    private func setupTargets() {
+        contentView.backButton.addTarget(self, action: #selector(backButtonWasPressed), for: .touchUpInside)
+    }
+}
+
+// MARK: -
+// MARK: - Extention RegistraionViewController + @objc methods
+
+extension RegistrationViewController {
+    @objc private func backButtonWasPressed() {
+        navigationStepBackResponder.handleStepBack()
     }
 }

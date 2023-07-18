@@ -32,7 +32,7 @@ class QuestionDependencyConteiner {
         }
         
         let registrationViewControllerFactory = {
-            self.makeRegistrationViewControllerFactory()
+            self.makeRegistrationViewControllerFactory(navigationStepBackResponder: sharedViewModel)
         }
         
         let mainTabBarFactory = {
@@ -87,8 +87,13 @@ class QuestionDependencyConteiner {
         )
     }
     
-    private func makeRegistrationViewControllerFactory() -> RegistrationViewController {
-        return RegistrationViewController()
+    private func makeRegistrationViewControllerFactory(navigationStepBackResponder: NavigationStepBackResponder) -> RegistrationViewController {
+        let registrationViewModel = createRegistrationViewModel()
+        return RegistrationViewController(viewModel: registrationViewModel, navigationStepBackResponder: navigationStepBackResponder)
+    }
+    
+    private func createRegistrationViewModel() -> RegistrationViewModel {
+        return RegistrationViewModel()
     }
     
     private func makeMainTabBarController() -> UITabBarController {
