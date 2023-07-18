@@ -19,6 +19,15 @@ class SignInViewControllerView: UIView {
         return imageView
     }()
     
+    lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.automaticallyAdjustsScrollIndicatorInsets = false
+        scrollView.contentInsetAdjustmentBehavior = .never
+        scrollView.showsVerticalScrollIndicator = false
+        return scrollView
+    }()
+    
     lazy var topWaveImageView: UIImageView = {
         let imageview = UIImageView()
         imageview.translatesAutoresizingMaskIntoConstraints = false
@@ -36,7 +45,7 @@ class SignInViewControllerView: UIView {
     lazy var stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.spacing = 20
+        stackView.spacing = Constants.SignIn.stackSpacing
         stackView.axis = .vertical
         return stackView
     }()
@@ -45,7 +54,7 @@ class SignInViewControllerView: UIView {
         let button = LoginButton(
             title: "Войти с помощью AppleID",
             titleColor: .white,
-            size: 12,
+            size: Constants.General.baseButtonFontSize,
             backgroundColor: .black,
             border: false,
             image: Images.SignIn.appleImage.image,
@@ -59,7 +68,7 @@ class SignInViewControllerView: UIView {
         let button = LoginButton(
             title: "Войти с помощью Google",
             titleColor: .black,
-            size: 12,
+            size: Constants.General.baseButtonFontSize,
             backgroundColor: .white,
             border: true,
             image: Images.SignIn.googleImage.image,
@@ -75,7 +84,7 @@ class SignInViewControllerView: UIView {
         label.text = "или войдите с помощью email"
         label.underlineText(
             firstRange: "или войдите с помощью email",
-            fontSize: 12,
+            fontSize:Constants.General.baseLabelFontSize,
             weight: .regular,
             color: .white
         )
@@ -86,12 +95,12 @@ class SignInViewControllerView: UIView {
     lazy var alreayHaveAccountLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 12)
+        label.font = UIFont.systemFont(ofSize: Constants.General.baseLabelFontSize)
         label.textColor = .white
         label.text = "Уже есть аккаунт? Войти"
         label.underlineText(
             firstRange: "Войти",
-            fontSize: 12,
+            fontSize: Constants.General.baseLabelFontSize,
             weight: .bold,
             color: .purple
         )
@@ -142,6 +151,7 @@ class SignInViewControllerView: UIView {
         layoutBackgroundImage()
         layoutTopWaveImage()
         layoutMainImageView()
+        layoutScrollView()
         layoutStackView()
 //        layoutBottomWaveImageView()
         layoutSignInWithEmailLabel()
@@ -161,7 +171,7 @@ class SignInViewControllerView: UIView {
         NSLayoutConstraint.activate([
             topWaveImageView.topAnchor.constraint(equalTo: topAnchor),
             topWaveImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            topWaveImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -60),
+            topWaveImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Constants.SignIn.baseConstraint),
             topWaveImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.2)
         ])
     }
@@ -170,10 +180,21 @@ class SignInViewControllerView: UIView {
         addSubview(mainImageView)
         
         NSLayoutConstraint.activate([
-            mainImageView.topAnchor.constraint(equalTo: topWaveImageView.bottomAnchor, constant: -90),
-            mainImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 60),
-            mainImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -60),
+            mainImageView.topAnchor.constraint(equalTo: topWaveImageView.bottomAnchor, constant: (-Constants.SignIn.baseConstraint) * 1.5),
+            mainImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.SignIn.baseConstraint),
+            mainImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Constants.SignIn.baseConstraint),
             mainImageView.heightAnchor.constraint(equalTo: mainImageView.widthAnchor, multiplier: 1.2)
+        ])
+    }
+    
+    private func layoutScrollView() {
+        addSubview(scrollView)
+        
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: mainImageView.bottomAnchor, constant: Constants.General.defaultSpacing),
+            scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
     
@@ -181,12 +202,12 @@ class SignInViewControllerView: UIView {
         stackView.addArrangedSubview(appleIDSignInButton)
         stackView.addArrangedSubview(googleSignInButton)
         
-        addSubview(stackView)
+        scrollView.addSubview(stackView)
         
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: mainImageView.bottomAnchor, constant: Constants.General.defaultSpacing),
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.General.defaultSpacing),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Constants.General.defaultSpacing)
+            stackView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+            stackView.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor, constant: Constants.General.defaultSpacing),
+            stackView.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: -Constants.General.defaultSpacing)
         ])
     }
     
@@ -202,31 +223,31 @@ class SignInViewControllerView: UIView {
 //    }
     
     private func layoutSignInWithEmailLabel(){
-        addSubview(signInWithEmailLabel)
+        scrollView.addSubview(signInWithEmailLabel)
         
         NSLayoutConstraint.activate([
-            signInWithEmailLabel.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 30),
+            signInWithEmailLabel.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: Constants.SignIn.baseConstraint / 2),
             signInWithEmailLabel.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
     }
     
     private func layoutAlreayHaveAccountLabel() {
-        addSubview(alreayHaveAccountLabel)
+        scrollView.addSubview(alreayHaveAccountLabel)
         
         NSLayoutConstraint.activate([
-            alreayHaveAccountLabel.topAnchor.constraint(equalTo: signInWithEmailLabel.bottomAnchor, constant: 30),
+            alreayHaveAccountLabel.topAnchor.constraint(equalTo: signInWithEmailLabel.bottomAnchor, constant: Constants.SignIn.baseConstraint / 2),
             alreayHaveAccountLabel.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
     }
     
     private func layoutBottomView() {
-        addSubview(bottomView)
+        scrollView.addSubview(bottomView)
         
         NSLayoutConstraint.activate([
             bottomView.topAnchor.constraint(equalTo: googleSignInButton.bottomAnchor, constant: Constants.General.defaultSpacing),
-            bottomView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.General.defaultSpacing),
-            bottomView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Constants.General.defaultSpacing),
-            bottomView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Constants.General.defaultSpacing)
+            bottomView.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor, constant: Constants.General.defaultSpacing),
+            bottomView.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: -Constants.General.defaultSpacing),
+            bottomView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -Constants.General.defaultSpacing)
         ])
     }
     
