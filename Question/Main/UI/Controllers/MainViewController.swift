@@ -10,11 +10,11 @@ import UIKit
 class MainViewController: NiblessViewController {
     let viewModel: MainViewModel
     
-    let launchViewControllerFactory: () -> LaunchViewController
-    let onboardingViewControllerFactory: () -> OnboardingViewController
-    let singInViewControllerFactory: () -> SignInViewController
-    let registrationViewControllerFactory: () -> RegistrationViewController
-    let mainTabBarControllerFactory: () -> UITabBarController
+    private let launchViewControllerFactory: () -> LaunchViewController
+    private let onboardingViewControllerFactory: () -> OnboardingViewController
+    private let singInViewControllerFactory: () -> SignInViewController
+    private let registrationViewControllerFactory: () -> RegistrationViewController
+    private let mainTabBarControllerFactory: () -> UITabBarController
     
     private let currentNavigationController = UINavigationController()
     

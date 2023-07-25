@@ -114,13 +114,6 @@ class SignInViewControllerView: UIView {
         return view
     }()
     
-//    lazy var bottomWaveImageView: UIImageView = {
-//        let imageview = UIImageView()
-//        imageview.translatesAutoresizingMaskIntoConstraints = false
-//        imageview.image = Images.SignIn.bottomWaveImage.image
-//        return imageview
-//    }()
-    
     // MARK: -
     // MARK: - LifeCycle
     
@@ -154,7 +147,6 @@ class SignInViewControllerView: UIView {
         layoutMainImageView()
         layoutScrollView()
         layoutStackView()
-//        layoutBottomWaveImageView()
         layoutSignInWithEmailLabel()
         layoutAlreayHaveAccountLabel()
         layoutBottomView()
@@ -211,17 +203,6 @@ class SignInViewControllerView: UIView {
             stackView.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: -Constants.General.defaultSpacing)
         ])
     }
-    
-//    private func layoutBottomWaveImageView() {
-//        addSubview(bottomWaveImageView)
-//
-//        NSLayoutConstraint.activate([
-//            bottomWaveImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
-//            bottomWaveImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 60),
-//            bottomWaveImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-//            bottomWaveImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.2)
-//        ])
-//    }
     
     private func layoutSignInWithEmailLabel(){
         scrollView.addSubview(signInWithEmailLabel)
