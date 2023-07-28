@@ -7,7 +7,7 @@
 
 import UIKit
 
-class OnboardingViewController: NiblessViewController {
+final class OnboardingViewController: NiblessViewController {
     
     // MARK: -
     // MARK: - Private Properties
@@ -27,14 +27,14 @@ class OnboardingViewController: NiblessViewController {
     // MARK: - Public Properties
     
     let viewModel: OnboardingViewModel
-    let navigationResponder: MainResponder
+    let onboardingNavigationResponder: OnboardingNavigationResponder
     
     // MARK: -
     // MARK: - LifeCycle
     
-    init(viewModel: OnboardingViewModel, navigationResponer: MainResponder) {
+    init(viewModel: OnboardingViewModel, onboardingNavigationResponder: OnboardingNavigationResponder) {
         self.viewModel = viewModel
-        self.navigationResponder = navigationResponer
+        self.onboardingNavigationResponder = onboardingNavigationResponder
         super.init()
     }
     
@@ -263,8 +263,8 @@ extension OnboardingViewController: UIScrollViewDelegate {
         let pageIndex = round(scrollView.contentOffset.x / contentView.frame.width)
         contentView.pageControl.currentPage = Int(pageIndex)
         
-        let maxHoriaontalOffset = scrollView.contentSize.width - contentView.frame.width
-        let persentHorizontalOffset = scrollView.contentOffset.x / maxHoriaontalOffset
+        let maxHorizontalOffset = scrollView.contentSize.width - contentView.frame.width
+        let persentHorizontalOffset = scrollView.contentOffset.x / maxHorizontalOffset
         
         applyTransform(
             persentHorizontalOffset: persentHorizontalOffset,
@@ -285,6 +285,6 @@ extension OnboardingViewController: UIScrollViewDelegate {
 
 extension OnboardingViewController {
     @objc private func skipOnboarding(sender: UIButton) {
-        navigationResponder.showSignIn()
+        onboardingNavigationResponder.hideOnboarding()
     }
 }

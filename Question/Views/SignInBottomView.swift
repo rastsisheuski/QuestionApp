@@ -12,14 +12,14 @@ class SignInBottomView: UIView {
     // MARK: -
     // MARK: - Public Properties
     
-    lazy var scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.automaticallyAdjustsScrollIndicatorInsets = false
-        scrollView.contentInsetAdjustmentBehavior = .never
-        scrollView.showsVerticalScrollIndicator = false
-        return scrollView
-    }()
+//    lazy var scrollView: UIScrollView = {
+//        let scrollView = UIScrollView()
+//        scrollView.translatesAutoresizingMaskIntoConstraints = false
+//        scrollView.automaticallyAdjustsScrollIndicatorInsets = false
+//        scrollView.contentInsetAdjustmentBehavior = .never
+//        scrollView.showsVerticalScrollIndicator = false
+//        return scrollView
+//    }()
     
     lazy var orLabel: UILabel = {
         let label = UILabel()
@@ -111,7 +111,7 @@ class SignInBottomView: UIView {
     // MARK: - Public Methods
     
     private func layoutElements() {
-        layoutScrollView()
+//        layoutScrollView()
         layoutOrLabel()
         layoutStackView()
         layourForgotButton()
@@ -119,19 +119,19 @@ class SignInBottomView: UIView {
         layoutSignInButton()
     }
     
-    private func layoutScrollView() {
-        addSubview(scrollView)
-        
-        scrollView.fillSuperview()
-    }
+//    private func layoutScrollView() {
+//        addSubview(scrollView)
+//
+//        scrollView.fillSuperview()
+//    }
     
     private func layoutOrLabel() {
-        scrollView.addSubview(orLabel)
+        addSubview(orLabel)
         
         NSLayoutConstraint.activate([
-            orLabel.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
-            orLabel.leadingAnchor.constraint(equalTo:  scrollView.frameLayoutGuide.leadingAnchor, constant: Constants.General.defaultSpacing),
-            orLabel.trailingAnchor.constraint(equalTo:  scrollView.frameLayoutGuide.trailingAnchor, constant: -Constants.General.defaultSpacing)
+            orLabel.topAnchor.constraint(equalTo: topAnchor),
+            orLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.General.defaultSpacing),
+            orLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Constants.General.defaultSpacing)
         ])
     }
     
@@ -139,41 +139,41 @@ class SignInBottomView: UIView {
         stackView.addArrangedSubview(emailView)
         stackView.addArrangedSubview(passwordView)
         
-        scrollView.addSubview(stackView)
+        addSubview(stackView)
         
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: orLabel.bottomAnchor, constant: 0),
-            stackView.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor, constant: Constants.General.defaultSpacing),
-            stackView.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: -Constants.General.defaultSpacing)
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.General.defaultSpacing),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Constants.General.defaultSpacing)
         ])
     }
     
     private func layourForgotButton() {
-        scrollView.addSubview(forgotPasswordButton)
+        addSubview(forgotPasswordButton)
         
         NSLayoutConstraint.activate([
             forgotPasswordButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 10),
-            forgotPasswordButton.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: -Constants.General.defaultSpacing),
+            forgotPasswordButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Constants.General.defaultSpacing),
         ])
     }
     
     private func layoutDontHaveAccountLabel() {
-        scrollView.addSubview(dontHaveAccountLabel)
+        addSubview(dontHaveAccountLabel)
         
         NSLayoutConstraint.activate([
             dontHaveAccountLabel.topAnchor.constraint(equalTo: forgotPasswordButton.bottomAnchor, constant: 24),
-            dontHaveAccountLabel.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor)
+            dontHaveAccountLabel.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
     }
     
     private func layoutSignInButton() {
-        scrollView.addSubview(signInButton)
+        addSubview(signInButton)
         
         NSLayoutConstraint.activate([
             signInButton.topAnchor.constraint(equalTo: dontHaveAccountLabel.bottomAnchor, constant: 30),
-            signInButton.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor, constant: Constants.General.defaultSpacing),
-            signInButton.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: -Constants.General.defaultSpacing),
-            signInButton.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -20)
+            signInButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.General.defaultSpacing),
+            signInButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Constants.General.defaultSpacing),
+            signInButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20)
         ])
     }
 }
