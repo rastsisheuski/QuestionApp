@@ -8,5 +8,5 @@
 import Foundation
 
 protocol SignInNavigationResponder {
-    func showSignIn()
+    func hideSignIn()
 }

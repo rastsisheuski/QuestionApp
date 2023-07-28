@@ -20,14 +20,16 @@ class SignInViewController: NiblessViewController {
     // MARK: - Public Properties
     
     let viewModel: SignInViewModel
-    let navigationResponer: MainResponder
+    
+    private let registrationNavigationResponder: RegistrationNavigationResponder
     
     // MARK: -
     // MARK: - LifeCycle
     
-    init(viewModel: SignInViewModel, navigationResponer: MainResponder) {
+    init(viewModel: SignInViewModel,
+         registrationNavigationResponder: RegistrationNavigationResponder) {
+        self.registrationNavigationResponder = registrationNavigationResponder
         self.viewModel = viewModel
-        self.navigationResponer = navigationResponer
         super.init()
     }
     
@@ -42,6 +44,7 @@ class SignInViewController: NiblessViewController {
         
         hideKeyboardWhenTappedAround()
         setupGesture()
+        setupTarget()
     }
     
     // MARK: -
@@ -53,6 +56,10 @@ class SignInViewController: NiblessViewController {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(respondToPanGesture))
         contentView.alreayHaveAccountLabel.addGestureRecognizer(tapGesture)
+    }
+    
+    private func setupTarget() {
+        contentView.googleSignInButton.addTarget(self, action: #selector(googleAuthButtonWasPressed), for: .touchUpInside)
     }
 }
 
@@ -70,6 +77,10 @@ extension SignInViewController {
     }
     
     @objc func respondToGesture() {
-        navigationResponer.showRegistration()
+        registrationNavigationResponder.showRegistration()
+    }
+    
+    @objc func googleAuthButtonWasPressed() {
+        viewModel.authorizedByGoogle()
     }
 }

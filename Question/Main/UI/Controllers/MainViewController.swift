@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 class MainViewController: NiblessViewController {
     let viewModel: MainViewModel
@@ -17,6 +18,7 @@ class MainViewController: NiblessViewController {
     private let mainTabBarControllerFactory: () -> UITabBarController
     
     private let currentNavigationController = UINavigationController()
+    private var cancellable = Set<AnyCancellable>()
     
     init(viewModel: MainViewModel,
          launchViewControllerFactory: @escaping () -> LaunchViewController,
@@ -38,30 +40,33 @@ class MainViewController: NiblessViewController {
         super.viewDidLoad()
         
         bindViewModel()
-        viewModel.checkAuthorization()
+        viewModel.checkIsOnboardingWasShowen()
     }
     
     private func bindViewModel() {
-        viewModel.mainView.bind { [weak self] mainView in
-            guard let mainView,
-                  let self else { return }
-            
-            switch mainView {
-                case .launch:
-                    self.presentLaunchViewController()
-                case .onboarding:
-                    self.presentOnboardingViewController()
-                case .singIn:
-                    self.presentSignInViewcontroller()
-                case .registration:
-                    self.presentRegistrationViewController()
-                case .mainTabBar:
-                    self.presentMainTabBarController()
+        viewModel.isDisplayingOnboarding.receive(on: DispatchQueue.main).sink { [weak self] needDisplayOnboarding in
+            if needDisplayOnboarding {
+                self?.presentOnboardingViewController()
+            } else {
+                self?.presentSignInViewController()
             }
-        }
-        viewModel.stepBack.bind { [weak self] _ in
-            self?.currentNavigationController.popViewController(animated: true)
-        }
+        }.store(in: &cancellable)
+        
+        viewModel.isDisplayingSignIn.receive(on: DispatchQueue.main).sink { [weak self]  needDisplaySignIn in
+            if needDisplaySignIn {
+                self?.presentSignInViewController()
+            } else {
+                // сделать скрытие sign in
+            }
+        }.store(in: &cancellable)
+        
+        viewModel.isDisplayingRegistration.receive(on: DispatchQueue.main).sink { [weak self] needDisplayRegistration in
+            if needDisplayRegistration {
+                self?.presentRegistrationViewController()
+            } else {
+                self?.hideRegistrationViewController()
+            }
+        }.store(in: &cancellable)
     }
     
     private func presentLaunchViewController() {
@@ -76,7 +81,7 @@ class MainViewController: NiblessViewController {
         currentNavigationController.pushViewController(onboardingVC,animated: true)
     }
     
-    private func presentSignInViewcontroller() {
+    private func presentSignInViewController() {
         let signInVC = singInViewControllerFactory()
         addFullScreen(childViewController: currentNavigationController)
         currentNavigationController.viewControllers = [signInVC]
@@ -91,5 +96,9 @@ class MainViewController: NiblessViewController {
         remove(childViewController: currentNavigationController)
         let mainTabBar = mainTabBarControllerFactory()
         addFullScreen(childViewController: mainTabBar)
+    }
+    
+    private func hideRegistrationViewController() {
+        currentNavigationController.popViewController(animated: true)
     }
 }

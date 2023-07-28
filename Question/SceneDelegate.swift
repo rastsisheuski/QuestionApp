@@ -11,13 +11,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     
-    let appContainer = QuestionDependencyConteiner()
+    var appContainer: QuestionDependencyConteiner?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
-        let rootViewController = appContainer.makeMainViewcontroller()
+        
         window = UIWindow(windowScene: windowScene)
+        let container = QuestionDependencyConteiner(sharedWindow: window!)
+        let rootViewController = container.makeMainViewcontroller()
+        appContainer = container
         window?.windowScene = windowScene
         window?.rootViewController = rootViewController
         window?.makeKeyAndVisible()

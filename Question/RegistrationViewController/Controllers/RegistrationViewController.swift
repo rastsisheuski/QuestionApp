@@ -19,13 +19,13 @@ class RegistrationViewController: NiblessViewController {
     // MARK: -
     // MARK: - Public Properties
     
-    let navigationStepBackResponder: NavigationStepBackResponder
+    let navigationStepBackResponder: RegistrationNavigationStepBackResponder
     let viewModel: RegistrationViewModel
     
     // MARK: -
     // MARK: - Lifecycle
     
-    init(viewModel: RegistrationViewModel ,navigationStepBackResponder: NavigationStepBackResponder) {
+    init(viewModel: RegistrationViewModel ,navigationStepBackResponder: RegistrationNavigationStepBackResponder) {
         self.viewModel = viewModel
         self.navigationStepBackResponder = navigationStepBackResponder
         super.init()
@@ -57,6 +57,6 @@ class RegistrationViewController: NiblessViewController {
 
 extension RegistrationViewController {
     @objc private func backButtonWasPressed() {
-        navigationStepBackResponder.handleStepBack()
+        navigationStepBackResponder.registrationStepBack()
     }
 }
