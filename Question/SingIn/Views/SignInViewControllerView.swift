@@ -15,7 +15,7 @@ class SignInViewControllerView: UIView {
     lazy var backgroundImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = Images.SignIn.backgroundImage.image
+        imageView.image = Images.SignIn.signInBackgroundImage.image
         return imageView
     }()
     
@@ -29,16 +29,16 @@ class SignInViewControllerView: UIView {
     }()
     
     lazy var topWaveImageView: UIImageView = {
-        let imageview = UIImageView()
-        imageview.translatesAutoresizingMaskIntoConstraints = false
-        imageview.image = Images.SignIn.topWaveImage.image
-        return imageview
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = Images.SignIn.signInTopWave.image
+        return imageView
     }()
     
     lazy var mainImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = Images.SignIn.mainImage.image
+        imageView.image = Images.SignIn.signInMainImage.image
         return imageView
     }()
     
@@ -92,7 +92,7 @@ class SignInViewControllerView: UIView {
         return label
     }()
     
-    lazy var alreayHaveAccountLabel: UILabel = {
+    lazy var alreadyHaveAccountLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: Constants.General.baseLabelFontSize)
@@ -214,11 +214,11 @@ class SignInViewControllerView: UIView {
     }
     
     private func layoutAlreayHaveAccountLabel() {
-        scrollView.addSubview(alreayHaveAccountLabel)
+        scrollView.addSubview(alreadyHaveAccountLabel)
         
         NSLayoutConstraint.activate([
-            alreayHaveAccountLabel.topAnchor.constraint(equalTo: signInWithEmailLabel.bottomAnchor, constant: Constants.SignIn.baseConstraint / 2),
-            alreayHaveAccountLabel.centerXAnchor.constraint(equalTo: centerXAnchor)
+            alreadyHaveAccountLabel.topAnchor.constraint(equalTo: signInWithEmailLabel.bottomAnchor, constant: Constants.SignIn.baseConstraint / 2),
+            alreadyHaveAccountLabel.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
     }
     

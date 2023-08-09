@@ -9,17 +9,27 @@ import UIKit
 import Firebase
 import FirebaseAuth
 
-class QuestionDependencyConteiner {
+class QuestionDependencyContainer {
+    
+    // MARK: -
+    // MARK: - Public Properties
     
     let sharedWindow: UIWindow
+    
+    // MARK: -
+    // MARK: - LifeCycle
     
     init(sharedWindow: UIWindow) {
         self.sharedWindow = sharedWindow
     }
     
-    func makeMainViewcontroller() -> MainViewController {
+    // MARK: -
+    // MARK: - Public Methods
+    
+    func makeMainViewController() -> MainViewController {
         
         let sharedViewModel = createMainViewModel()
+        let foregroundSplashWindow = createSplashWindow(windowLevel: .alert + 1)
         
         let launchViewControllerFactory = {
             self.makeLaunchViewControllerFactory()
@@ -30,9 +40,9 @@ class QuestionDependencyConteiner {
         }
         
         let signInViewControllerFactory = {
-            self.makeSignInViewcontrollerFactory(
-                navigationRespnoder: sharedViewModel,
-                registrationNavigationRsponder: sharedViewModel
+            self.makeSignInViewControllerFactory(
+                navigationResponder: sharedViewModel,
+                registrationNavigationResponder: sharedViewModel
             )
         }
         
@@ -50,27 +60,26 @@ class QuestionDependencyConteiner {
             onboardingViewControllerFactory: onboardingViewControllerFactory,
             singInViewControllerFactory: signInViewControllerFactory,
             registrationViewControllerFactory: registrationViewControllerFactory,
-            mainTabBarControllerFactory: mainTabBarFactory
+            mainTabBarControllerFactory: mainTabBarFactory,
+            splashWindow: foregroundSplashWindow
         )
     }
+    
+    // MARK: -
+    // MARK: - Private Methods
     
     private func makeLaunchViewControllerFactory() -> LaunchViewController {
         return LaunchViewController()
     }
     
     private func makeOnboardingViewControllerFactory(navigationResponder: OnboardingNavigationResponder) -> OnboardingViewController {
-        let onboardingViewModel = makeOnboardingViewModel()
-        return OnboardingViewController(viewModel: onboardingViewModel, onboardingNavigationResponder: navigationResponder)
+        return OnboardingViewController(onboardingNavigationResponder: navigationResponder)
     }
     
-    private func makeOnboardingViewModel() -> OnboardingViewModel {
-        return OnboardingViewModel()
-    }
-    
-    private func makeSignInViewcontrollerFactory(navigationRespnoder: SignInNavigationResponder,
-                                                 registrationNavigationRsponder: RegistrationNavigationResponder) -> SignInViewController {
-        let signInViewModel = createSignInViewModel(navigationResponder: navigationRespnoder)
-        let viewController = SignInViewController(viewModel: signInViewModel, registrationNavigationResponder: registrationNavigationRsponder)
+    private func makeSignInViewControllerFactory(navigationResponder: SignInNavigationResponder,
+                                                 registrationNavigationResponder: RegistrationNavigationResponder) -> SignInViewController {
+        let signInViewModel = createSignInViewModel(navigationResponder: navigationResponder)
+        let viewController = SignInViewController(viewModel: signInViewModel, registrationNavigationResponder: registrationNavigationResponder)
         return viewController
     }
     
@@ -96,12 +105,7 @@ class QuestionDependencyConteiner {
     }
     
     private func makeRegistrationViewControllerFactory(navigationStepBackResponder: RegistrationNavigationStepBackResponder) -> RegistrationViewController {
-        let registrationViewModel = createRegistrationViewModel()
-        return RegistrationViewController(viewModel: registrationViewModel, navigationStepBackResponder: navigationStepBackResponder)
-    }
-    
-    private func createRegistrationViewModel() -> RegistrationViewModel {
-        return RegistrationViewModel()
+        return RegistrationViewController(navigationStepBackResponder: navigationStepBackResponder)
     }
     
     private func makeMainTabBarController() -> UITabBarController {
@@ -111,5 +115,13 @@ class QuestionDependencyConteiner {
     
     private func createMainViewModel() -> MainViewModel {
         return MainViewModel()
+    }
+    
+    private func createSplashWindow(windowLevel: UIWindow.Level) -> UIWindow {
+        guard let windowScene = sharedWindow.windowScene else { return UIWindow() }
+        let splashWindow = UIWindow(windowScene: windowScene)
+        splashWindow.windowLevel = windowLevel
+        
+        return splashWindow
     }
 }

@@ -76,7 +76,7 @@ class OnboardingView: UIView {
         descriptionLabel.text = text
     }
     
-    func setlabelTransform(for labels: [UILabel], transform: CGAffineTransform) {
+    func setLabelTransform(for labels: [UILabel], transform: CGAffineTransform) {
         labels.forEach { $0.transform = transform }
     }
     

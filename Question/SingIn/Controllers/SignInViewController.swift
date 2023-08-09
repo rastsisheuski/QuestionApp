@@ -55,7 +55,7 @@ class SignInViewController: NiblessViewController {
         contentView.signInWithEmailLabel.addGestureRecognizer(gesture)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(respondToPanGesture))
-        contentView.alreayHaveAccountLabel.addGestureRecognizer(tapGesture)
+        contentView.alreadyHaveAccountLabel.addGestureRecognizer(tapGesture)
     }
     
     private func setupTarget() {
@@ -66,7 +66,7 @@ class SignInViewController: NiblessViewController {
 extension SignInViewController {
     @objc func respondToPanGesture() {
         contentView.signInWithEmailLabel.isHidden = true
-        contentView.alreayHaveAccountLabel.isHidden = true
+        contentView.alreadyHaveAccountLabel.isHidden = true
         contentView.bottomView.alpha = 0.0
         
         UIView.animate(withDuration: 0.5) { [weak self] in

@@ -15,6 +15,13 @@ enum Constants {
         static let baseLabelFontSize: CGFloat = 12.0
     }
     
+    enum Launch {
+        static let logoTitleConstraint: CGFloat = 8.0
+        static let halfOfLogoBoundsSizeHeight: CGFloat = 120
+        static let logoTitleFontSize: CGFloat = 40
+        static let logoTitleWidth: CGFloat = 75
+    }
+    
     enum Onboarding {
         static let pageControlHeight: CGFloat = 50.0
         static let imageViewBottomConstraint: CGFloat = 60

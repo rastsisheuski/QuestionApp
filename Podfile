@@ -12,6 +12,7 @@ target 'Question' do
  	pod 'FirebaseStorage'
  	pod 'Firebase/Auth'
 	pod 'GoogleSignIn'
+ 	pod 'lottie-ios'
 
 	post_install do |installer|
     	  installer.generated_projects.each do |project|

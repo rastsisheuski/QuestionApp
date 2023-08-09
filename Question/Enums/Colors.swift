@@ -23,7 +23,7 @@ enum Colors {
     }
     
     enum signIn {
-        static let logInbottomColor: UIColor = #colorLiteral(red: 0.3294117647, green: 0.1137254902, blue: 0.3803921569, alpha: 1)
+        static let logInBottomColor: UIColor = #colorLiteral(red: 0.3294117647, green: 0.1137254902, blue: 0.3803921569, alpha: 1)
     }
     
     enum OnboardingView {

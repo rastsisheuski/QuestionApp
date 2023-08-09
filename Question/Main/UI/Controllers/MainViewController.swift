@@ -9,7 +9,14 @@ import UIKit
 import Combine
 
 class MainViewController: NiblessViewController {
+    
+    // MARK: -
+    // MARK: - Public Properties
+    
     let viewModel: MainViewModel
+    
+    // MARK: -
+    // MARK: - Private Properties
     
     private let launchViewControllerFactory: () -> LaunchViewController
     private let onboardingViewControllerFactory: () -> OnboardingViewController
@@ -18,14 +25,19 @@ class MainViewController: NiblessViewController {
     private let mainTabBarControllerFactory: () -> UITabBarController
     
     private let currentNavigationController = UINavigationController()
+    private let splashWindow: UIWindow
     private var cancellable = Set<AnyCancellable>()
+    
+    // MARK: -
+    // MARK: - Lifecycle
     
     init(viewModel: MainViewModel,
          launchViewControllerFactory: @escaping () -> LaunchViewController,
          onboardingViewControllerFactory: @escaping () -> OnboardingViewController,
          singInViewControllerFactory: @escaping () -> SignInViewController,
          registrationViewControllerFactory: @escaping () -> RegistrationViewController,
-         mainTabBarControllerFactory: @escaping () -> UITabBarController)
+         mainTabBarControllerFactory: @escaping () -> UITabBarController,
+         splashWindow: UIWindow)
     {
         self.viewModel = viewModel
         self.launchViewControllerFactory = launchViewControllerFactory
@@ -33,6 +45,7 @@ class MainViewController: NiblessViewController {
         self.singInViewControllerFactory = singInViewControllerFactory
         self.registrationViewControllerFactory = registrationViewControllerFactory
         self.mainTabBarControllerFactory = mainTabBarControllerFactory
+        self.splashWindow = splashWindow
         super.init()
     }
     
@@ -40,7 +53,24 @@ class MainViewController: NiblessViewController {
         super.viewDidLoad()
         
         bindViewModel()
-        viewModel.checkIsOnboardingWasShowen()
+        viewModel.showLaunch()
+    }
+    
+    // MARK: -
+    // MARK: - Private Methods
+    
+    private func bindLaunchViewController() {
+        guard let launchVC = splashWindow.rootViewController as? LaunchViewController else { return }
+        
+        if launchVC.isAnimationWasShown {
+            launchVC.startDismissAnimation()
+            splashWindow.resignKey()
+            splashWindow.isHidden = true
+        } else {
+            launchVC.animationCompletion = { [launchVC] in
+                launchVC.startDismissAnimation()
+            }
+        }
     }
     
     private func bindViewModel() {
@@ -67,12 +97,21 @@ class MainViewController: NiblessViewController {
                 self?.hideRegistrationViewController()
             }
         }.store(in: &cancellable)
+        
+        viewModel.isDisplayingLaunch.receive(on: DispatchQueue.main).sink { [weak self] needDisplayLaunch in
+            if needDisplayLaunch {
+                self?.presentLaunchViewController()
+            } else {
+                self?.bindLaunchViewController()
+            }
+        }.store(in: &cancellable)
     }
     
     private func presentLaunchViewController() {
         let launchVC = launchViewControllerFactory()
-        addFullScreen(childViewController: currentNavigationController)
-        currentNavigationController.viewControllers = [launchVC]
+        splashWindow.rootViewController = launchVC
+        splashWindow.isHidden = false
+        splashWindow.makeKeyAndVisible()
     }
     
     private func presentOnboardingViewController() {

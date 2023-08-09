@@ -25,15 +25,13 @@ final class OnboardingViewController: NiblessViewController {
     
     // MARK: -
     // MARK: - Public Properties
-    
-    let viewModel: OnboardingViewModel
+
     let onboardingNavigationResponder: OnboardingNavigationResponder
     
     // MARK: -
     // MARK: - LifeCycle
     
-    init(viewModel: OnboardingViewModel, onboardingNavigationResponder: OnboardingNavigationResponder) {
-        self.viewModel = viewModel
+    init(onboardingNavigationResponder: OnboardingNavigationResponder) {
         self.onboardingNavigationResponder = onboardingNavigationResponder
         super.init()
     }
@@ -143,11 +141,11 @@ final class OnboardingViewController: NiblessViewController {
     }
     
     private func applyTransform(
-        persentHorizontalOffset: CGFloat,
+        percentHorizontalOffset: CGFloat,
         currentIndex: Int
     ) {
         let firstScreenOffsetStep = OnboardingInfo.first.rawValue
-        let secondScreenOffsetStep = OnboardingInfo.secont.rawValue
+        let secondScreenOffsetStep = OnboardingInfo.second.rawValue
         let thirdScreenOffsetStep = OnboardingInfo.third.rawValue
         let fourthScreenOffsetStep = OnboardingInfo.fourth.rawValue
         
@@ -155,67 +153,67 @@ final class OnboardingViewController: NiblessViewController {
         contentView.pageControl.alpha = 1.0
         hideStartButton()
         
-        switch persentHorizontalOffset {
+        switch percentHorizontalOffset {
             // MARK: - First View
             case firstScreenOffsetStep...secondScreenOffsetStep:
                 let firstTransform = CGAffineTransform(
-                    scaleX: (secondScreenOffsetStep - persentHorizontalOffset) / secondScreenOffsetStep,
-                    y: (secondScreenOffsetStep - persentHorizontalOffset) / secondScreenOffsetStep
+                    scaleX: (secondScreenOffsetStep - percentHorizontalOffset) / secondScreenOffsetStep,
+                    y: (secondScreenOffsetStep - percentHorizontalOffset) / secondScreenOffsetStep
                 )
                 let secondTransform = CGAffineTransform(
-                    scaleX: persentHorizontalOffset / secondScreenOffsetStep,
-                    y: persentHorizontalOffset / secondScreenOffsetStep
+                    scaleX: percentHorizontalOffset / secondScreenOffsetStep,
+                    y: percentHorizontalOffset / secondScreenOffsetStep
                 )
                 let firstItem = slides[0]
                 let secondItem = slides[1]
                 
-                firstItem.setlabelTransform(
+                firstItem.setLabelTransform(
                     for: [firstItem.titleLabel, firstItem.descriptionLabel],
                     transform: firstTransform
                 )
-                secondItem.setlabelTransform(
+                secondItem.setLabelTransform(
                     for: [secondItem.titleLabel, secondItem.descriptionLabel],
                     transform: secondTransform
                 )
                 // MARK:  - Second View
             case secondScreenOffsetStep...thirdScreenOffsetStep:
                 let secondTransform = CGAffineTransform(
-                    scaleX: (thirdScreenOffsetStep - persentHorizontalOffset) / secondScreenOffsetStep,
-                    y: (thirdScreenOffsetStep - persentHorizontalOffset) / secondScreenOffsetStep
+                    scaleX: (thirdScreenOffsetStep - percentHorizontalOffset) / secondScreenOffsetStep,
+                    y: (thirdScreenOffsetStep - percentHorizontalOffset) / secondScreenOffsetStep
                 )
                 let thirdTransform = CGAffineTransform(
-                    scaleX: persentHorizontalOffset/thirdScreenOffsetStep,
-                    y: persentHorizontalOffset/thirdScreenOffsetStep
+                    scaleX: percentHorizontalOffset/thirdScreenOffsetStep,
+                    y: percentHorizontalOffset/thirdScreenOffsetStep
                 )
-                let secontItem = slides[1]
+                let secondItem = slides[1]
                 let thirdItem = slides[2]
                 
-                secontItem.setlabelTransform(
-                    for: [secontItem.titleLabel, secontItem.descriptionLabel],
+                secondItem.setLabelTransform(
+                    for: [secondItem.titleLabel, secondItem.descriptionLabel],
                     transform: secondTransform
                 )
-                thirdItem.setlabelTransform(
+                thirdItem.setLabelTransform(
                     for: [thirdItem.titleLabel, thirdItem.descriptionLabel],
                     transform: thirdTransform
                 )
                 // MARK: - Third View
             default:
                 let thirdTransform = CGAffineTransform(
-                    scaleX: (fourthScreenOffsetStep - persentHorizontalOffset) / secondScreenOffsetStep,
-                    y: (fourthScreenOffsetStep - persentHorizontalOffset) / secondScreenOffsetStep
+                    scaleX: (fourthScreenOffsetStep - percentHorizontalOffset) / secondScreenOffsetStep,
+                    y: (fourthScreenOffsetStep - percentHorizontalOffset) / secondScreenOffsetStep
                 )
                 let fourthTransform = CGAffineTransform(
-                    scaleX: persentHorizontalOffset,
-                    y: persentHorizontalOffset
+                    scaleX: percentHorizontalOffset,
+                    y: percentHorizontalOffset
                 )
                 let thirdItem = slides[2]
                 let fourthItem = slides[3]
                 
-                thirdItem.setlabelTransform(
+                thirdItem.setLabelTransform(
                     for: [thirdItem.titleLabel, thirdItem.descriptionLabel],
                     transform: thirdTransform
                 )
-                fourthItem.setlabelTransform(
+                fourthItem.setLabelTransform(
                     for: [fourthItem.titleLabel, fourthItem.descriptionLabel],
                     transform: fourthTransform
                 )
@@ -264,10 +262,10 @@ extension OnboardingViewController: UIScrollViewDelegate {
         contentView.pageControl.currentPage = Int(pageIndex)
         
         let maxHorizontalOffset = scrollView.contentSize.width - contentView.frame.width
-        let persentHorizontalOffset = scrollView.contentOffset.x / maxHorizontalOffset
+        let percentHorizontalOffset = scrollView.contentOffset.x / maxHorizontalOffset
         
         applyTransform(
-            persentHorizontalOffset: persentHorizontalOffset,
+            percentHorizontalOffset: percentHorizontalOffset,
             currentIndex: Int(pageIndex)
         )
     }

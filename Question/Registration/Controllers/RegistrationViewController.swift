@@ -20,13 +20,11 @@ class RegistrationViewController: NiblessViewController {
     // MARK: - Public Properties
     
     let navigationStepBackResponder: RegistrationNavigationStepBackResponder
-    let viewModel: RegistrationViewModel
     
     // MARK: -
     // MARK: - Lifecycle
     
-    init(viewModel: RegistrationViewModel ,navigationStepBackResponder: RegistrationNavigationStepBackResponder) {
-        self.viewModel = viewModel
+    init(navigationStepBackResponder: RegistrationNavigationStepBackResponder) {
         self.navigationStepBackResponder = navigationStepBackResponder
         super.init()
     }

@@ -10,8 +10,10 @@ import Firebase
 import FirebaseAuth
 import Combine
 
-final class MainViewModel: OnboardingNavigationResponder, SignInNavigationResponder, RegistrationNavigationResponder, RegistrationNavigationStepBackResponder {
+final class MainViewModel: OnboardingNavigationResponder, SignInNavigationResponder, RegistrationNavigationResponder, RegistrationNavigationStepBackResponder, LaunchNavigationResponder, LaunchPresenterResponder {
 
+    private(set) var isDisplayingLaunch = PassthroughSubject<Bool, Never>()
+    private(set) var isDisplayingForegroundWindow = PassthroughSubject<Bool, Never>()
     private(set) var isDisplayingOnboarding = PassthroughSubject<Bool, Never>()
     private(set) var isDisplayingSignIn = PassthroughSubject<Bool, Never>()
     private(set) var isDisplayingRegistration = PassthroughSubject<Bool, Never>()
@@ -24,7 +26,11 @@ final class MainViewModel: OnboardingNavigationResponder, SignInNavigationRespon
     // MARK: -
     // MARK: - Public Methods
     
-    func checkIsOnboardingWasShowen() {
+    func showLaunch() {
+        isDisplayingLaunch.send(true)
+    }
+    
+    func checkIsOnboardingWasShown() {
         isDisplayingOnboarding.send(true)
     }
     
@@ -42,6 +48,14 @@ final class MainViewModel: OnboardingNavigationResponder, SignInNavigationRespon
     
     func registrationStepBack() {
         isDisplayingRegistration.send(false)
+    }
+    
+    func presentForegroundWindow() {
+        isDisplayingForegroundWindow.send(true)
+    }
+    
+    func dismissForegroundWindow(completion: @escaping () -> Void) {
+        isDisplayingForegroundWindow.send(false)
     }
 }
 

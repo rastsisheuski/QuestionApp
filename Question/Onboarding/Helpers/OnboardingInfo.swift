@@ -9,14 +9,14 @@ import UIKit
 
 enum OnboardingInfo: Double, CaseIterable {
     case first = 0.0
-    case secont = 0.33
+    case second = 0.33
     case third = 0.66
     case fourth = 1.0
     
     var title: String {
         switch self {
             case .first:    return "Начало пути"
-            case .secont:   return "Фундамент пути"
+            case .second:   return "Фундамент пути"
             case .third:    return "Ключ на пути"
             case .fourth:   return "Комфорт на пути"
         }
@@ -26,7 +26,7 @@ enum OnboardingInfo: Double, CaseIterable {
         switch self {
             case .first:
                 return "Поздравляем, Вы в начале пути под названием “Самопознание”. Надеемся, что пространство нашего приложения станет для Вас удобным и поможет достичь необходимые цели. Впереди много “Вопросов”и столько же “Ответов”. "
-            case .secont:
+            case .second:
                 return "Приложение “Q” предоставляет Вам самый главный инструмент самопознания - Вопрос.Переоценить важность задавать себе вопросы и рефлексировать над ними - невозможно, согласны? Как часто мы убегаем от “вопросов в себе”? Как часто они наст настигают и “требуют” ответа? А что если остановиться и попытаться дать ответ!"
             case .third:
                 return "Ответы на “вопросы в себе” помогают исследовать свои мысли, эмоции, потребности и ценности. Определить свои сильные и слабые стороны, научиться принимать решения, которые соответствуют нашим личным целям и стремлениям.\n Данный процесс потребует время и открытости, дорога будет тяжелой и очень интересной, ведь только “легкие пути ведут в тупик”"
@@ -38,7 +38,7 @@ enum OnboardingInfo: Double, CaseIterable {
     var image: UIImage {
         switch self {
             case .first:    return UIImage(named: "welcomeImage") ?? UIImage()
-            case .secont:   return UIImage(named: "questionImage") ?? UIImage()
+            case .second:   return UIImage(named: "questionImage") ?? UIImage()
             case .third:    return UIImage(named: "solutionImage") ?? UIImage()
             case .fourth:   return UIImage(named: "helpImage") ?? UIImage()
         }

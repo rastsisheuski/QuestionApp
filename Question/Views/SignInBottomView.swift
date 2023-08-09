@@ -86,7 +86,7 @@ class SignInBottomView: UIView {
             title: "Войти",
             titleColor: .white,
             size: 16,
-            backgroundColor: Colors.signIn.logInbottomColor,
+            backgroundColor: Colors.signIn.logInBottomColor,
             border: false,
             image: .none,
             shadow: true
@@ -114,7 +114,7 @@ class SignInBottomView: UIView {
 //        layoutScrollView()
         layoutOrLabel()
         layoutStackView()
-        layourForgotButton()
+        layoutForgotButton()
         layoutDontHaveAccountLabel()
         layoutSignInButton()
     }
@@ -148,7 +148,7 @@ class SignInBottomView: UIView {
         ])
     }
     
-    private func layourForgotButton() {
+    private func layoutForgotButton() {
         addSubview(forgotPasswordButton)
         
         NSLayoutConstraint.activate([

@@ -74,7 +74,7 @@ class AuthTextField: UITextField {
         self.placeholderText = type.placeholderText
         self.errorTitle = type.errorText
         
-        setupAtributtedPlaceholder()
+        setupAttributedPlaceholder()
     }
     
     func checkValidStateOfTextField() {
@@ -84,7 +84,7 @@ class AuthTextField: UITextField {
     // MARK: -
     // MARK: - Private Methods
     
-    private func setupAtributtedPlaceholder() {
+    private func setupAttributedPlaceholder() {
         let attributes = [NSAttributedString.Key.foregroundColor: Colors.General.placeholderText,
                           NSAttributedString.Key.font: UIFont.systemFont(ofSize: Constants.General.defaultSpacing)
         ]

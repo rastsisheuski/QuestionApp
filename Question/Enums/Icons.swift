@@ -14,7 +14,7 @@ enum Icons {
     case defaultDishIcon
     case totalBasketIcon
     case deliveryBasketIcon
-    case ckeckIcon
+    case checkIcon
     
     var image: UIImage {
         switch self {
@@ -24,7 +24,7 @@ enum Icons {
             case .defaultDishIcon:      return UIImage(named: "defaultDishIcon") ?? UIImage()
             case .totalBasketIcon:      return UIImage(named: "totalBasketIcon") ?? UIImage()
             case .deliveryBasketIcon:   return UIImage(named: "deliveryBasketIcon") ?? UIImage()
-            case .ckeckIcon:            return UIImage(named: "ckeckIcon") ?? UIImage()
+            case .checkIcon:            return UIImage(named: "ckeckIcon") ?? UIImage()
         }
     }
 }

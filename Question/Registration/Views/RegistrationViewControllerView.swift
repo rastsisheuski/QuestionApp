@@ -15,7 +15,7 @@ class RegistrationViewControllerView: UIView {
     lazy var backgroundImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = Images.SignIn.backgroundImage.image
+        imageView.image = Images.SignIn.signInBackgroundImage.image
         return imageView
     }()
     
@@ -94,7 +94,7 @@ class RegistrationViewControllerView: UIView {
             title: "Войти",
             titleColor: .white,
             size: Constants.General.baseButtonFontSize,
-            backgroundColor: Colors.signIn.logInbottomColor,
+            backgroundColor: Colors.signIn.logInBottomColor,
             border: false,
             image: .none,
             shadow: true

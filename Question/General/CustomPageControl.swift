@@ -71,9 +71,9 @@ class CustomPageControl: UIStackView {
             
             dots.append(dot)
             addArrangedSubview(dot)
-            if index == currentPage {
-                dot.widthAnchor.constraint(equalToConstant: inactiveDotSize.width * activeDotWidthMultiplier)
-            }
+//            if index == currentPage {
+//                dot.widthAnchor.constraint(equalToConstant: inactiveDotSize.width * activeDotWidthMultiplier)
+//            }
             dot.heightAnchor.constraint(equalToConstant: 16).isActive = true
             let widthConstraint = dot.widthAnchor.constraint(equalToConstant: inactiveDotSize.width)
             dotWidthConstraints.append(widthConstraint)
