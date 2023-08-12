@@ -9,5 +9,5 @@ import Foundation
 
 protocol LaunchAnimatorResponder {
     func animateAppearance()
-    func animateDisappearance(completion: @escaping () -> Void)
+    func animateDisappearance(splashAnimationCompletion: @escaping () -> Void)
 }

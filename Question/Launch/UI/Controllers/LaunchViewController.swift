@@ -41,12 +41,24 @@ final class LaunchViewController: NiblessViewController {
         
         let delay: TimeInterval = 2
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-            self.contentView.showFullLogo()
+            self.contentView.animateDisappearance { [weak self] in
+                self?.contentView.animateClashLogoImage()
+            }
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        print("dfg")
+    }
+    
+    deinit {
+        print("DEINIT")
+    }
+    
     func startDismissAnimation() {
-        print("Dismiss")
+//        contentView.drawMask()
     }
 }
 

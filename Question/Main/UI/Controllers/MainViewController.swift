@@ -54,6 +54,7 @@ class MainViewController: NiblessViewController {
         
         bindViewModel()
         viewModel.showLaunch()
+        viewModel.checkIsOnboardingWasShown()
     }
     
     // MARK: -
@@ -64,8 +65,6 @@ class MainViewController: NiblessViewController {
         
         if launchVC.isAnimationWasShown {
             launchVC.startDismissAnimation()
-            splashWindow.resignKey()
-            splashWindow.isHidden = true
         } else {
             launchVC.animationCompletion = { [launchVC] in
                 launchVC.startDismissAnimation()
@@ -111,7 +110,8 @@ class MainViewController: NiblessViewController {
         let launchVC = launchViewControllerFactory()
         splashWindow.rootViewController = launchVC
         splashWindow.isHidden = false
-        splashWindow.makeKeyAndVisible()
+//        splashWindow.makeKeyAndVisible()
+        splashWindow.alpha = 1
     }
     
     private func presentOnboardingViewController() {

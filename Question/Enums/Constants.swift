@@ -17,7 +17,7 @@ enum Constants {
     
     enum Launch {
         static let logoTitleConstraint: CGFloat = 8.0
-        static let halfOfLogoBoundsSizeHeight: CGFloat = 120
+        static let halfOfLogoBoundsSizeHeight: CGFloat = 110
         static let logoTitleFontSize: CGFloat = 40
         static let logoTitleWidth: CGFloat = 75
     }
